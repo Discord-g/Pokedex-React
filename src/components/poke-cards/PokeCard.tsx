@@ -24,13 +24,18 @@ export const PokeCard = (props: myProp) => {
     const navigate = useNavigate()
 
     const loadPokemon = async(id: string) => {
-        setLoading(true)
-        const result = await pokemonService.getPokemonData(id)
-        if(result) setPokemon(result)
+        try {
+            setLoading(true)
+            const result = await pokemonService.getPokemonData(id)
+            if(result) setPokemon(result)
 
-        const resultSpecie = await pokemonSpecieService.getPokemonSpecieData(id)
-        if(resultSpecie) setPokemonSpecie(resultSpecie)
-        setLoading(false)
+            const resultSpecie = await pokemonSpecieService.getPokemonSpecieData(id)
+            if(resultSpecie) setPokemonSpecie(resultSpecie)
+        } catch (err) {
+
+        } finally {
+            setLoading(false)
+        }
     }
 
     const handleFavorite = async () => {
@@ -53,7 +58,9 @@ export const PokeCard = (props: myProp) => {
     return (
         <div className="card-container">
             {loading ? (
-                <Loader />
+                <div className="loader-container">
+                    <Loader />
+                </div>
             ) : (
                 <div className="card-body">
                     {pokemon && pokemonSpecie ? (

@@ -7,19 +7,22 @@ import pokemonService from "../../services/pokemonService";
 import type { pokemonAbilitiesModel, pokemonModel, pokemonTypeSlotModel } from "../../models/pokemon";
 import { StatsCard } from "../../components/stats-card/StatsCard";
 import { TypeChart } from "../../components/type-chart/TypeChart";
+import './details.scss'
 
 export const Details = () => {
     const { specieId } = useParams()
     const [pokemonSpecie, setPokemonSpecie] = useState<pokemonSpecieModel>()
-    const [loading, setLoading] = useState(true);
+    const [loadingSpecie, setLoadingSpecie] = useState(true);
 
     const [pokemonId, setPokemonId] = useState(0)
     const [pokemon, setPokemon] = useState<pokemonModel>()
+    const [loadingPokemon, setLoadingPokemon] = useState(true);
     
     const navigate = useNavigate()
 
     const getSpecie = async (id: string) => {
         try {
+            setLoadingSpecie(true)
             const result = await pokemonSpecieService.getPokemonSpecieData(id)
             if(result) {
                 setPokemonSpecie(result)
@@ -28,12 +31,13 @@ export const Details = () => {
         } catch (err) {
 
         } finally {
+            setLoadingSpecie(false)
         }
     }
 
     const getPokemon = async (id: string) => {
         try {
-            setLoading(true)
+            setLoadingPokemon(true)
             const result = await pokemonService.getPokemonData(id)
             if(result) {
                 setPokemon(result)
@@ -41,7 +45,7 @@ export const Details = () => {
         } catch (err) {
 
         } finally {
-            setLoading(false)
+            setLoadingPokemon(false)
         }
     }
     
@@ -58,44 +62,67 @@ export const Details = () => {
     }, [pokemonId])
 
     return (
-        <>
-            <header>
-                <button onClick={() => navigate('/')}>Return</button>
-            </header>
-            <main>
-                {loading ? (
+        <main className="main-details">
+            <div className="pokedex-container">
+                {(loadingSpecie || loadingPokemon) ? (
                     <Loader />
                 ) : (
-                    <div>
+                    <>
                         {(pokemonSpecie && pokemon) && (
-                            <div>
-                                <h1>{pokemonSpecie.name}</h1>
-                                <img src={pokemon.sprites.front_default}/>
-                                <section>
-                                    <StatsCard pokemonStats={pokemon.stats}/>
-                                </section>
-                                <section>
-                                    <div>
-                                        {pokemon.types.map((x: pokemonTypeSlotModel) => (<span>{x.type.name}</span>))}
+                            <div className="pokedex-body">
+                                <section className="pokedex-header">
+                                    <div className="name-container">
+                                        {pokemonSpecie.name}
                                     </div>
                                     <div>
-                                        {pokemon.abilities.map((x: pokemonAbilitiesModel) => (<span>{x.ability.name}</span>))}
-                                    </div>
-                                    <div>
-                                        <span>Height: {pokemon.height}</span>
-                                    </div>
-                                    <div>
-                                        <span>Weight: {pokemon.weight}</span>
+                                        <button onClick={() => navigate('/')}>Go Back</button>
                                     </div>
                                 </section>
-                                <section>
-                                    <TypeChart pokemonTypes={pokemon.types} />
+                                <section className="pokedex-section">
+                                    <div className="image-container">
+                                        <img src={pokemon.sprites.front_default}/>
+                                    </div>
+                                    <div className="stats-container">
+                                        <StatsCard pokemonStats={pokemon.stats}/>
+                                    </div>
+                                </section>
+                                <section className="pokedex-section">
+                                    <section className="typechart-container">
+                                        <TypeChart pokemonTypes={pokemon.types} />
+                                    </section>
+                                    <section>
+                                        <div className="types-container">
+                                            {pokemon.types.length > 1 ? (
+                                                <>
+                                                    <div className={`primary-type type-container type-${pokemon.types[0]?.type.name}`}>
+                                                        {pokemon.types[0]?.type.name}
+                                                    </div>
+                                                    <div className={`secondary-type type-container type-${pokemon.types[1]?.type.name}`}>
+                                                        {pokemon.types[1]?.type.name}
+                                                    </div>
+                                                </>
+                                            ) : (
+                                                <div className={`only-type type-container type-${pokemon.types[0]?.type.name}`}>
+                                                    {pokemon.types[0]?.type.name}
+                                                </div>
+                                            )}
+                                        </div>
+                                        <div>
+                                            {pokemon.abilities.map((x: pokemonAbilitiesModel) => (<span>{x.ability.name}</span>))}
+                                        </div>
+                                        <div>
+                                            <span>Height: {pokemon.height}</span>
+                                        </div>
+                                        <div>
+                                            <span>Weight: {pokemon.weight}</span>
+                                        </div>
+                                    </section>
                                 </section>
                             </div>
                         )}
-                    </div>
+                    </>
                 )}
-            </main>
-        </>
+            </div>
+        </main>
     )
 }

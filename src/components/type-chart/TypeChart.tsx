@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import type { pokemonTypeSlotModel } from "../../models/pokemon";
 import { Loader } from "../loader/Loader";
 import typeService from "../../services/typeService";
+import './typeChart.scss'
 
 interface myProp {
     pokemonTypes: pokemonTypeSlotModel[],
@@ -106,53 +107,79 @@ export const TypeChart = (props: myProp) => {
     }, [pokemonTypes])
 
     return (
-        <div>
+        <div className="chart-container">
             {loading ? (
                 <Loader />
             ) : (
-                <div>
-                    Type Effectiveness
+                <div className="chart-body">
+                    <section className="title-container">
+                        <div>Type Effectiveness</div>
+                    </section>
                     {superWeak.length > 0 && (
-                        <div>
-                            <span>4x Damaged</span>
-                            <div>
-                                {superWeak.map((effect: string) => (<span>{effect}</span>))}
+                        <section className="damage-container">
+                            <div className="damage-title">4x Damaged</div>
+                            <div className="types">
+                                {superWeak.map((effect: string) => (
+                                    <div className={`damage-type type-${effect}`}>
+                                        {effect}
+                                    </div>
+                                ))}
                             </div>
-                        </div>
+                        </section>
                     )}
-                    <div>
-                        <span>2x Damaged</span>
-                        <div>
-                            {weak.map((effect) => (<span>{effect}</span>))}
+                    <section className="damage-container">
+                        <div className="damage-title">2x Damaged</div>
+                        <div className="types">
+                            {weak.map((effect) => (
+                                <div className={`damage-type type-${effect}`}>
+                                    {effect}
+                                </div>
+                            ))}
                         </div>
-                    </div>
-                    <div>
-                        <span>1x Damaged</span>
-                        <div>
-                            {normal.map((effect) => (<span>{effect}</span>))}
+                    </section>
+                    <section className="damage-container">
+                        <div className="damage-title">1x Damaged</div>
+                        <div className="types">
+                            {normal.map((effect) => (
+                                <div className={`damage-type type-${effect}`}>
+                                    {effect}
+                                </div>
+                            ))}
                         </div>
-                    </div>
-                    <div>
-                        <span>1/2x Damaged</span>
-                        <div>
-                            {resist.map((effect) => (<span>{effect}</span>))}
+                    </section>
+                    <section className="damage-container">
+                        <div className="damage-title">1/2x Damaged</div>
+                        <div className="types">
+                            {resist.map((effect) => (
+                                <div className={`damage-type type-${effect}`}>
+                                    {effect}
+                                </div>
+                            ))}
                         </div>
-                    </div>
+                    </section>
                     {superResist.length > 0 && (
-                        <div>
-                            <span>1/4x Damaged</span>
-                            <div>
-                                {superResist.map((effect) => (<span>{effect}</span>))}
+                        <section className="damage-container">
+                            <div className="damage-title">1/4x Damaged</div>
+                            <div className="types">
+                                {superResist.map((effect) => (
+                                    <div className={`damage-type type-${effect}`}>
+                                        {effect}
+                                    </div>
+                                ))}
                             </div>
-                        </div>
+                        </section>
                     )}
                     {immune.length > 0 && (
-                        <div>
-                            <span>Immune</span>
-                            <div>
-                                {immune.map((effect) => (<span>{effect}</span>))}
+                        <section className="damage-container">
+                            <div className="damage-title">Immune</div>
+                            <div className="types">
+                                {immune.map((effect) => (
+                                    <div className={`damage-type type-${effect}`}>
+                                        {effect}
+                                    </div>
+                                ))}
                             </div>
-                        </div>
+                        </section>
                     )}
                 </div>
             )}

@@ -1,5 +1,6 @@
 import React from "react";
 import type { pokemonStatsModel } from "../../models/pokemon";
+import './statsCard.scss'
 
 interface myProp {
     pokemonStats: pokemonStatsModel[],
@@ -8,17 +9,51 @@ interface myProp {
 export const StatsCard = (props: myProp) => {
     const { pokemonStats } = props;
 
+    const getWidthStat = (stat: number) => {
+        const percentage = (stat * 100) / 300
+        return percentage + '%'
+    }
+
+    const getColorStat = (stat: number) => {
+        let statColor = ''
+
+        if(stat <= 40) {
+            statColor = '#ff1800'
+        } else if (stat <= 80) {
+            statColor = '#ff7e00'
+        } else if (stat <= 110) {
+            statColor = '#ffd600'
+        } else if (stat <= 170) {
+            statColor = '#4eff00'
+        } else {
+            statColor = '#02ffff'
+        }
+
+        return statColor
+    }
+
     return (
-        <div>
+        <>
             {pokemonStats && (
                 <>
                     {pokemonStats.map((pokemonStat: pokemonStatsModel) => (
-                        <div>
-                            {pokemonStat.stat.name}: {pokemonStat.base_stat}
+                        <div className="stat-body">
+                            <section className="stat-name">
+                                {pokemonStat.stat.name}: {pokemonStat.base_stat}
+                            </section>
+                            <section className="stat-value">
+                                <div
+                                    className="stat-line"
+                                    style={{
+                                        width: getWidthStat(pokemonStat.base_stat),
+                                        backgroundColor: getColorStat(pokemonStat.base_stat)
+                                    }}
+                                ></div>
+                            </section>
                         </div>
                     ))}
                 </>
             )}
-        </div>
+        </>
     )
 }

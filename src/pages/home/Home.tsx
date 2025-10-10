@@ -92,11 +92,11 @@ export const Home = () => {
                     </section>
                 </div>
             </header>
-            <main>
-                <div className="list-container">
-                    {loading ? (
-                        <Loader />
-                    ) : (
+            <main className="main-home">
+                {loading ? (
+                    <Loader />
+                ) : (
+                    <div className="list-container">
                         <div className="itens-container">
                             {currentList.map((item: pokemonListItemModel, index: number) => (
                                 <div key={index} className="item">
@@ -104,8 +104,9 @@ export const Home = () => {
                                 </div>
                             ))}
                         </div>
-                    )}
-                </div>
+                    </div>
+
+                )}
             </main>
             <footer>
                 <Pagination

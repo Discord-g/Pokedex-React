@@ -38,10 +38,16 @@ main {
     background-color: $pokedex-screen-color;
     display: flex;
     justify-content: center;
+    overflow-y: scroll;
+    height: calc(100vh - 72px);
 }
 
 footer {
-    background-color: yellow;
+    background-color: $pokedex-body-color;
+    border-top: $pokedex-body-detail-color solid 3px;
+    display: flex;
+    justify-content: center;
+    padding: 1.5em;
 }
 
 %types {

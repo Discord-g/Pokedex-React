@@ -1,0 +1,22 @@
+@use "../../sass/base.scss";
+
+.stat-body {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    .stat-name {
+        text-transform: uppercase;
+        text-align: end;
+        margin-right: 0.5em;
+    }
+
+    .stat-value {
+        width: 250px;
+    }
+
+    .stat-line {
+        height: 0.8em;
+        border-radius: 4px;
+    }
+}

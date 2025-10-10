@@ -1,0 +1,40 @@
+@use "../../sass/base.scss";
+
+.chart-container {
+    width: 100%;
+}
+
+.chart-body {
+    .title-container {
+        display: flex;
+        justify-content: center;
+    }
+
+    .damage-container {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin-top: 0.5em;
+    }
+
+
+    .damage-title {
+        width: 20%;
+    }
+
+    .types {
+        display: flex;
+        flex-wrap: wrap;
+        width: 77%;
+
+        .damage-type {
+            @extend %type;
+            border-radius: 10px;
+            border: solid 4px base.$pokedex-body-detail-color;
+            padding: 0.5em;
+            font-size: 0.8em;
+            min-width: 85px;
+            margin: 0 0.2em 0.2em 0;
+        }
+    }
+}

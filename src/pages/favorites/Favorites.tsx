@@ -32,10 +32,10 @@ export const Favorites = () => {
                 <button onClick={() => navigate('/')}>Return</button>
             </header>
             <main>
-                <div className="list-container">
-                    {loading ? (
-                        <Loader />
-                    ) : (
+                {loading ? (
+                    <Loader />
+                ) : (
+                    <div className="list-container">
                         <div className="itens-container">
                             {currentList.map((item: pokemonListItemModel, index: number) => (
                                 <div key={index} className="item">
@@ -43,8 +43,8 @@ export const Favorites = () => {
                                 </div>
                             ))}
                         </div>
-                    )}
-                </div>
+                    </div>
+                )}
             </main>
         </>
     )
