@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import type { pokemonListItemModel } from "../../models/pokemonListItem";
 import type { pokemonModel, pokemonTypeSlotModel } from "../../models/pokemon";
+import type { pokemonSpecieModel } from "../../models/pokemonSpecie";
 import { Loader } from "../loader/Loader";
 import pokemonService from "../../services/pokemonService";
-import type { pokemonSpecieModel } from "../../models/pokemonSpecie";
 import favoritesService from "../../services/favoritesService";
 import pokemonSpecieService from "../../services/pokemonSpecieService";
+import "./pokeCard.scss"
 
 interface myProp {
     pokemonItem: pokemonListItemModel,
@@ -50,26 +51,41 @@ export const PokeCard = (props: myProp) => {
     }, [pokemonItem])
     
     return (
-        <div>
+        <div className="card-container">
             {loading ? (
                 <Loader />
             ) : (
-                <div>
+                <div className="card-body">
                     {pokemon && pokemonSpecie ? (
                         <>
-                            <img src={pokemon?.sprites.front_default}/>
-                            <h3>{pokemonSpecie?.name}</h3>
-                            <div>
+                            <section className="image-container">
+                                <img src={pokemon?.sprites.front_default}/>
+                            </section>
+                            <div className="title-container">{pokemonSpecie.id} - {pokemonSpecie?.name}</div>
+                            <section className="types-container">
+                                {pokemon.types.length > 1 ? (
+                                    <>
+                                        <div className={`primary-type type-container type-${pokemon.types[0]?.type.name}`}>
+                                            {pokemon.types[0]?.type.name}
+                                        </div>
+                                        <div className={`secondary-type type-container type-${pokemon.types[1]?.type.name}`}>
+                                            {pokemon.types[1]?.type.name}
+                                        </div>
+                                    </>
+                                ) : (
+                                    <div className={`only-type type-container type-${pokemon.types[0]?.type.name}`}>
+                                        {pokemon.types[0]?.type.name}
+                                    </div>
+                                )}
+                            </section>
+                            <section className="buttons-container">
                                 <button
                                     onClick={handleFavorite}
                                 >
                                     {favoritesService.isFavorite(pokemonItem.name)  ? "Remove Favorite" : "Add Favorite"}
                                 </button>
-                                <div>
-                                    {pokemon.types.map((x: pokemonTypeSlotModel) => (<span>{x.type.name}</span>))}
-                                </div>
-                            </div>
-                            <button onClick={() => navigate(`/details/${pokemonSpecie.id}`)}>Details</button>
+                                <button onClick={() => navigate(`/details/${pokemonSpecie.id}`)}>Details</button>
+                            </section>
                         </>
                     ) : (
                         <div>No data</div>

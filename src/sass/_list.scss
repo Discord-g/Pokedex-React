@@ -1,0 +1,19 @@
+@use 'base';
+
+.list-container {
+    padding: 2em;
+    width: 100%;
+}
+
+.itens-container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+
+    .item {
+        width: 30%;
+        margin: 1% 1.6%;
+    }
+}

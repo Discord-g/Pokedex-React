@@ -1,0 +1,21 @@
+@use '../../sass/list';
+
+.filter-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    input {
+        margin-right: 2em;
+    }
+
+    .filter-buttons {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        button:nth-child(2) {
+            margin: 0 1em;
+        }
+    }
+}

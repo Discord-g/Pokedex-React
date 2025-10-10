@@ -4,6 +4,7 @@ import { Loader } from "../../components/loader/Loader";
 import type { pokemonListItemModel } from "../../models/pokemonListItem";
 import { PokeCard } from "../../components/poke-cards/PokeCard";
 import favoritesService from "../../services/favoritesService";
+import '../../sass/_list.scss'
 
 export const Favorites = () => {
     const [loading, setLoading] = useState(true);
@@ -31,17 +32,19 @@ export const Favorites = () => {
                 <button onClick={() => navigate('/')}>Return</button>
             </header>
             <main>
-                {loading ? (
-                    <Loader />
-                ) : (
-                    <div style={{ display: 'flex', width: '90%', flexWrap: 'wrap' }}>
-                        {currentList.map((item: pokemonListItemModel, index: number) => (
-                            <div key={index} style={{ width: '30%' }}>
-                                <PokeCard pokemonItem={item} postFavorite={getList}/>
-                            </div>
-                        ))}
-                    </div>
-                )}
+                <div className="list-container">
+                    {loading ? (
+                        <Loader />
+                    ) : (
+                        <div className="itens-container">
+                            {currentList.map((item: pokemonListItemModel, index: number) => (
+                                <div key={index} className="item">
+                                    <PokeCard pokemonItem={item} postFavorite={getList}/>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </div>
             </main>
         </>
     )

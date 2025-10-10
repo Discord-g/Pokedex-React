@@ -1,0 +1,160 @@
+$pokedex-body-color: #dc0a2d;
+$pokedex-body-detail-color: #6e0315;
+$pokedex-screen-color: #232323;
+$pokedex-border-color: #dedede;
+$pokedex-button1-color: #52ae5f;
+$pokedex-button2-color: #28aafe;
+
+$type-normal-color: #aa9;
+$type-fire-color: #f42;
+$type-water-color: #39f;
+$type-electric-color: #fc3;
+$type-grass-color: #7c5;
+$type-ice-color: #6cf;
+$type-fighting-color: #b54;
+$type-poison-color: #a59;
+$type-ground-color: #db5;
+$type-flying-color: #89f;
+$type-psychic-color: #f59;
+$type-bug-color: #ab2;
+$type-rock-color: #ba6;
+$type-ghost-color: #66b;
+$type-dragon-color: #76e;
+$type-dark-color: #754;
+$type-steel-color: #aab;
+$type-fairy-color: #e9e;
+
+body {
+    margin: 0;
+}
+
+header {
+    background-color: $pokedex-body-color;
+    padding: 1.5em;
+    border-bottom: $pokedex-body-detail-color solid 3px;
+}
+
+main {
+    background-color: $pokedex-screen-color;
+    display: flex;
+    justify-content: center;
+}
+
+footer {
+    background-color: yellow;
+}
+
+%types {
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+%type {
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+}
+
+.only-type {
+    @extend %type;
+    border-radius: 10px;
+    border: solid 4px $pokedex-border-color;
+    width: 100%;
+}
+
+.primary-type {
+    @extend %type;
+    border-radius: 10px 0px 0px 10px;
+    border-top: 4px solid $pokedex-border-color;
+    border-right: 2px solid $pokedex-border-color;
+    border-bottom: 4px solid $pokedex-border-color;
+    border-left: 4px solid $pokedex-border-color;
+    width: 50%
+}
+
+.secondary-type {
+    @extend %type;
+    border-radius: 0px 10px 10px 0px;
+    border-top: 4px solid $pokedex-border-color;
+    border-right: 4px solid $pokedex-border-color;
+    border-bottom: 4px solid $pokedex-border-color;
+    border-left: 2px solid $pokedex-border-color;
+    width: 50%
+}
+
+.type-normal {
+    background-color: $type-normal-color;
+}
+
+.type-fire {
+    background-color: $type-fire-color;
+}
+
+.type-water {
+    background-color: $type-water-color;
+}
+
+.type-grass {
+    background-color: $type-grass-color;
+}
+
+.type-poison {
+    background-color: $type-poison-color;
+}
+
+.type-flying {
+    background-color: $type-flying-color;
+}
+
+.type-bug {
+    background-color: $type-bug-color;
+}
+
+.type-electric {
+    background-color: $type-electric-color;
+}
+
+.type-ground {
+    background-color: $type-ground-color;
+}
+
+.type-fairy {
+    background-color: $type-fairy-color;
+}
+
+.type-fighting {
+    background-color: $type-fighting-color;
+}
+
+.type-psychic {
+    background-color: $type-psychic-color;
+}
+
+.type-dark {
+    background-color: $type-dark-color;
+}
+
+.type-steel {
+    background-color: $type-steel-color;
+}
+
+.type-dragon {
+    background-color: $type-dragon-color;
+}
+
+.type-rock {
+    background-color: $type-rock-color;
+}
+
+.type-ice {
+    background-color: $type-ice-color;
+}
+
+.type-ghost {
+    background-color: $type-ghost-color;
+}
+

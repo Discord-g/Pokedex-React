@@ -5,6 +5,7 @@ import type { pokemonListItemModel } from "../../models/pokemonListItem"
 import { Loader } from "../../components/loader/Loader"
 import { PokeCard } from "../../components/poke-cards/PokeCard"
 import { Pagination } from "../../components/pagination/Pagination"
+import './home.scss'
 
 export const Home = () => {
     const [loading, setLoading] = useState<boolean>(true)
@@ -79,26 +80,32 @@ export const Home = () => {
     return (
         <>
             <header>
-                <input
-                    value={search}
-                    onChange={(e) => handleSearchInput(e.target.value)}
-                />
-                <button onClick={handleSearch}>Search</button>
-                <button onClick={handleClear}>Clear</button>
-                <button onClick={() => navigate('/favorites')}>Favorites</button>
+                <div className="filter-container">
+                    <input
+                        value={search}
+                        onChange={(e) => handleSearchInput(e.target.value)}
+                    />
+                    <section className="filter-buttons">
+                        <button onClick={handleSearch}>Search</button>
+                        <button onClick={handleClear}>Clear</button>
+                        <button onClick={() => navigate('/favorites')}>Favorites</button>
+                    </section>
+                </div>
             </header>
             <main>
-                {loading ? (
-                    <Loader />
-                ) : (
-                    <div style={{ display: 'flex', width: '90%', flexWrap: 'wrap' }}>
-                        {currentList.map((item: pokemonListItemModel, index: number) => (
-                            <div key={index} style={{ width: '30%' }}>
-                                <PokeCard pokemonItem={item}/>
-                            </div>
-                        ))}
-                    </div>
-                )}
+                <div className="list-container">
+                    {loading ? (
+                        <Loader />
+                    ) : (
+                        <div className="itens-container">
+                            {currentList.map((item: pokemonListItemModel, index: number) => (
+                                <div key={index} className="item">
+                                    <PokeCard pokemonItem={item}/>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </div>
             </main>
             <footer>
                 <Pagination
