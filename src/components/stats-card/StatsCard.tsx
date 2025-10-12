@@ -32,6 +32,16 @@ export const StatsCard = (props: myProp) => {
         return statColor
     }
 
+    const getNameStat = (stat: string) => {
+        if(stat == 'special-attack') {
+            return 'sp. attack'
+        } else if (stat == 'special-defense') {
+            return 'sp. defense'
+        } else {
+            return stat
+        }
+    }
+
     return (
         <>
             {pokemonStats && (
@@ -39,7 +49,7 @@ export const StatsCard = (props: myProp) => {
                     {pokemonStats.map((pokemonStat: pokemonStatsModel) => (
                         <div className="stat-body">
                             <section className="stat-name">
-                                {pokemonStat.stat.name}: {pokemonStat.base_stat}
+                                {getNameStat(pokemonStat.stat.name)}: {pokemonStat.base_stat}
                             </section>
                             <section className="stat-value">
                                 <div

@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faStar as star, faInfo } from '@fortawesome/free-solid-svg-icons'
+import { faStar as outlineStar } from '@fortawesome/free-regular-svg-icons'
 import type { pokemonListItemModel } from "../../models/pokemonListItem";
 import type { pokemonModel, pokemonTypeSlotModel } from "../../models/pokemon";
 import type { pokemonSpecieModel } from "../../models/pokemonSpecie";
@@ -88,10 +91,20 @@ export const PokeCard = (props: myProp) => {
                             <section className="buttons-container">
                                 <button
                                     onClick={handleFavorite}
+                                    className="favorite-btn"
+                                    title={favoritesService.isFavorite(pokemonItem.name) ? 
+                                        "Remove Favorite" : "Add Favorite"
+                                    }
                                 >
-                                    {favoritesService.isFavorite(pokemonItem.name)  ? "Remove Favorite" : "Add Favorite"}
+                                    {favoritesService.isFavorite(pokemonItem.name) ? (
+                                        <FontAwesomeIcon icon={star} size="lg" />
+                                    ) : (
+                                        <FontAwesomeIcon icon={outlineStar} size="lg" />
+                                    )}
                                 </button>
-                                <button onClick={() => navigate(`/details/${pokemonSpecie.id}`)}>Details</button>
+                                <button onClick={() => navigate(`/details/${pokemonSpecie.id}`)} title="Details">
+                                    <FontAwesomeIcon icon={faInfo} size="lg" />
+                                </button>
                             </section>
                         </>
                     ) : (

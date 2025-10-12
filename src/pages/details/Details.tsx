@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faAngleLeft } from '@fortawesome/free-solid-svg-icons'
 import { Loader } from "../../components/loader/Loader";
 import pokemonSpecieService from "../../services/pokemonSpecieService";
 import type { pokemonSpecieModel } from "../../models/pokemonSpecie";
@@ -74,22 +76,24 @@ export const Details = () => {
                                     <div className="name-container">
                                         {pokemonSpecie.name}
                                     </div>
-                                    <div>
-                                        <button onClick={() => navigate('/')}>Go Back</button>
+                                    <div className="header-buttons">
+                                        <button className="goBack" title="Return" onClick={() => navigate('/')}>
+                                            <FontAwesomeIcon icon={faAngleLeft} size="lg" />
+                                        </button>
+                                        <button className="goBack" title="Return" onClick={() => navigate('/')}>
+                                            <FontAwesomeIcon icon={faAngleLeft} size="lg" />
+                                        </button>
+                                        <button className="goBack" title="Return" onClick={() => navigate('/')}>
+                                            <FontAwesomeIcon icon={faAngleLeft} size="lg" />
+                                        </button>
                                     </div>
                                 </section>
                                 <section className="pokedex-section">
                                     <div className="image-container">
                                         <img src={pokemon.sprites.front_default}/>
                                     </div>
-                                    <div className="stats-container">
-                                        <StatsCard pokemonStats={pokemon.stats}/>
-                                    </div>
                                 </section>
                                 <section className="pokedex-section">
-                                    <section className="typechart-container">
-                                        <TypeChart pokemonTypes={pokemon.types} />
-                                    </section>
                                     <section>
                                         <div className="types-container">
                                             {pokemon.types.length > 1 ? (
@@ -117,6 +121,12 @@ export const Details = () => {
                                             <span>Weight: {pokemon.weight}</span>
                                         </div>
                                     </section>
+                                    <div className="stats-container">
+                                        <StatsCard pokemonStats={pokemon.stats}/>
+                                    </div>
+                                </section>
+                                <section className="typechart-container">
+                                    <TypeChart pokemonTypes={pokemon.types} />
                                 </section>
                             </div>
                         )}

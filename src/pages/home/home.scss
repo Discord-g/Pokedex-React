@@ -1,4 +1,5 @@
 @use '../../sass/list';
+@use "../../sass/base";
 
 .filter-container {
     display: flex;
@@ -13,13 +14,36 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        height: -moz-available;          /* WebKit-based browsers will ignore this. */
+        height: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
+
+        button {
+            background-color: base.$pokedex-button1-color;
+            border: base.$pokedex-body-detail-color solid 2px;
+            border-radius: 5px;
+            height: 100%;
+            padding: 0.5em 1em;
+            color: base.$pokedex-border-color;
+        }
 
         button:nth-child(2) {
             margin: 0 1em;
         }
     }
+
+    .search-input {
+        background-color: base.$pokedex-screen-color;
+        padding: 0.5em;
+        border: base.$pokedex-border-color solid 2px;
+        border-radius: 5px;
+    }
+
+
+    .search-input:focus-visible {
+        outline: 0px;
+    }
 }
 
 .main-home {
-    height: calc(100vh - 144px);
+    height: calc(100vh - 89.31px - 91.31px);
 }

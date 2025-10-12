@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faAngleLeft } from '@fortawesome/free-solid-svg-icons'
 import { Loader } from "../../components/loader/Loader";
 import type { pokemonListItemModel } from "../../models/pokemonListItem";
 import { PokeCard } from "../../components/poke-cards/PokeCard";
@@ -29,7 +31,9 @@ export const Favorites = () => {
     return (
         <>
             <header>
-                <button onClick={() => navigate('/')}>Return</button>
+                <button className="goBack" title="Return" onClick={() => navigate('/')}>
+                    <FontAwesomeIcon icon={faAngleLeft} size="lg" />
+                </button>
             </header>
             <main>
                 {loading ? (

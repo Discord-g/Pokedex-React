@@ -50,9 +50,23 @@
     .buttons-container {
         width: 100%;
         margin-top: 0.5em;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
 
         button {
-            width: 50%;
+            width: 45%;
+            padding: 0.6em 0.3em;
+            border: base.$pokedex-body-detail-color solid 4px;
+            border-radius: 5px;
+            background-color: base.$pokedex-button1-color;
+            font-size: medium;
+            color: base.$pokedex-border-color;
+        }
+
+        .favorite-btn {
+            background-color: base.$pokedex-button2-color;
+            color: base.$favorite-color;
         }
     }
 }

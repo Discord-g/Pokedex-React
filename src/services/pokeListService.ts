@@ -17,15 +17,23 @@ const getAll = async () => {
     }
 }
 
+const getTotalPages = () => {
+    const quantity = allPokemon.length
+    return Math.ceil(quantity / 21);
+}
+
 const getBySearch = (search: string, page: number) => {
     const query = search.toLowerCase()
     const filtered: pokemonListItemModel[] = allPokemon.filter((pokemon: pokemonListItemModel) =>
         pokemon.name.toLowerCase().includes(query)
     )
 
-    if(filtered.length <= 0) return []
-
+    let total = 1
     let finalList: pokemonListItemModel[] = []
+
+    if(filtered.length <= 0) return { finalList, total }
+
+    total = Math.ceil(filtered.length / 21)
 
     const startList = 21*(page-1)
     let endList = startList + 21
@@ -36,11 +44,12 @@ const getBySearch = (search: string, page: number) => {
         if(item) finalList.push(item)
     }
 
-    return finalList
+    return { finalList, total }
 }
 
 export default {
     getPaginatedList,
     getAll,
-    getBySearch
+    getBySearch,
+    getTotalPages
 }

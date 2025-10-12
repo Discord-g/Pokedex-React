@@ -5,6 +5,8 @@ $pokedex-border-color: #dedede;
 $pokedex-button1-color: #52ae5f;
 $pokedex-button2-color: #28aafe;
 
+$favorite-color: #fa8;
+
 $type-normal-color: #aa9;
 $type-fire-color: #f42;
 $type-water-color: #39f;
@@ -24,13 +26,22 @@ $type-dark-color: #754;
 $type-steel-color: #aab;
 $type-fairy-color: #e9e;
 
+@font-face {
+    font-family: 'Pokemon Classic';
+    src: url(../assets/fonts/PokemonClassic.ttf);
+}
+
+* {
+    font-family: 'Pokemon Classic', sans-serif;
+}
+
 body {
     margin: 0;
 }
 
 header {
     background-color: $pokedex-body-color;
-    padding: 1.5em;
+    padding: 1.5em 2em;
     border-bottom: $pokedex-body-detail-color solid 3px;
 }
 
@@ -39,7 +50,7 @@ main {
     display: flex;
     justify-content: center;
     overflow-y: scroll;
-    height: calc(100vh - 72px);
+    height: calc(100vh - 84.97px);
 }
 
 footer {
@@ -50,6 +61,22 @@ footer {
     padding: 1.5em;
 }
 
+button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.goBack {
+    background-color: $pokedex-button2-color;
+    border: $pokedex-body-detail-color solid 2px;
+    border-radius: 5px;
+    height: 100%;
+    padding: 0.5em 1em;
+    color: $pokedex-screen-color;
+}
+
 %types {
     border-radius: 10px;
     display: flex;
@@ -58,7 +85,7 @@ footer {
 }
 
 %type {
-    color: #fff;
+    color: $pokedex-border-color;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -68,27 +95,27 @@ footer {
 .only-type {
     @extend %type;
     border-radius: 10px;
-    border: solid 4px $pokedex-border-color;
+    border: solid 4px $pokedex-body-detail-color;
     width: 100%;
 }
 
 .primary-type {
     @extend %type;
     border-radius: 10px 0px 0px 10px;
-    border-top: 4px solid $pokedex-border-color;
-    border-right: 2px solid $pokedex-border-color;
-    border-bottom: 4px solid $pokedex-border-color;
-    border-left: 4px solid $pokedex-border-color;
+    border-top: 4px solid $pokedex-body-detail-color;
+    border-right: 2px solid $pokedex-body-detail-color;
+    border-bottom: 4px solid $pokedex-body-detail-color;
+    border-left: 4px solid $pokedex-body-detail-color;
     width: 50%
 }
 
 .secondary-type {
     @extend %type;
     border-radius: 0px 10px 10px 0px;
-    border-top: 4px solid $pokedex-border-color;
-    border-right: 4px solid $pokedex-border-color;
-    border-bottom: 4px solid $pokedex-border-color;
-    border-left: 2px solid $pokedex-border-color;
+    border-top: 4px solid $pokedex-body-detail-color;
+    border-right: 4px solid $pokedex-body-detail-color;
+    border-bottom: 4px solid $pokedex-body-detail-color;
+    border-left: 2px solid $pokedex-body-detail-color;
     width: 50%
 }
 

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { useNavigate } from "react-router"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faStar, faMagnifyingGlass, faBroom } from '@fortawesome/free-solid-svg-icons'
 import pokeListService from "../../services/pokeListService"
 import type { pokemonListItemModel } from "../../models/pokemonListItem"
 import { Loader } from "../../components/loader/Loader"
@@ -12,6 +14,7 @@ export const Home = () => {
 
     const [currentList, setCurrentList] = useState<pokemonListItemModel[]>([])  
     const [page, setPage] = useState<number>(1)
+    const [totalPages, setTotalPages] = useState<number>(1)
 
     const [search, setSearch] = useState<string>('')
     const [isFiltered, setIsFiltered] = useState<boolean>(false)
@@ -21,14 +24,20 @@ export const Home = () => {
     const getList = async (searchParam = search, pageParam = page, filtered = isFiltered) => {
         try {
             setLoading(true)
+            let list: pokemonListItemModel[] = []
+            let pages = 1
 
             if(filtered) {
-                const list = pokeListService.getBySearch(searchParam, pageParam);
-                setCurrentList(list)
+                const { finalList, total } = pokeListService.getBySearch(searchParam, pageParam);
+                list = finalList
+                pages = total
             } else {
-                const list = await pokeListService.getPaginatedList(pageParam);
-                setCurrentList(list)
+                list = await pokeListService.getPaginatedList(pageParam);
+                pages = pokeListService.getTotalPages()
             }
+
+            setCurrentList(list)
+            setTotalPages(pages)
         } catch (err) {
 
         } finally {
@@ -83,12 +92,19 @@ export const Home = () => {
                 <div className="filter-container">
                     <input
                         value={search}
+                        className="search-input"
                         onChange={(e) => handleSearchInput(e.target.value)}
                     />
                     <section className="filter-buttons">
-                        <button onClick={handleSearch}>Search</button>
-                        <button onClick={handleClear}>Clear</button>
-                        <button onClick={() => navigate('/favorites')}>Favorites</button>
+                        <button onClick={handleSearch} title="Search">
+                            <FontAwesomeIcon icon={faMagnifyingGlass} size="lg" />
+                        </button>
+                        <button onClick={handleClear} title="Clear">
+                            <FontAwesomeIcon icon={faBroom} size="lg" />
+                        </button>
+                        <button onClick={() => navigate('/favorites')} title="Favorites">
+                            <FontAwesomeIcon icon={faStar} size="lg" />
+                        </button>
                     </section>
                 </div>
             </header>
@@ -113,6 +129,7 @@ export const Home = () => {
                     currentPage={page}
                     setPage={changePage}
                     loading={loading}
+                    totalPages={totalPages}
                 />
             </footer>
         </>
