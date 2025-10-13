@@ -31,7 +31,7 @@ export const Favorites = () => {
     return (
         <>
             <header>
-                <button className="goBack" title="Return" onClick={() => navigate('/')}>
+                <button className="button-back" title="Return" onClick={() => navigate('/')}>
                     <FontAwesomeIcon icon={faAngleLeft} size="lg" />
                 </button>
             </header>

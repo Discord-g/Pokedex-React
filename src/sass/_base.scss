@@ -6,6 +6,8 @@ $pokedex-button1-color: #52ae5f;
 $pokedex-button2-color: #28aafe;
 
 $favorite-color: #fa8;
+$male-color: #3355FF;
+$female-color: #FF77DD;
 
 $type-normal-color: #aa9;
 $type-fire-color: #f42;
@@ -68,7 +70,7 @@ button {
     cursor: pointer;
 }
 
-.goBack {
+.button-back {
     background-color: $pokedex-button2-color;
     border: $pokedex-body-detail-color solid 2px;
     border-radius: 5px;

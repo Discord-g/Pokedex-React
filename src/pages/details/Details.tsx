@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngleLeft } from '@fortawesome/free-solid-svg-icons'
+import { faStar as star, faAngleLeft, faVolumeLow, faMars, faVenus } from '@fortawesome/free-solid-svg-icons'
+import { faStar as outlineStar } from '@fortawesome/free-regular-svg-icons'
 import { Loader } from "../../components/loader/Loader";
 import pokemonSpecieService from "../../services/pokemonSpecieService";
 import type { pokemonSpecieModel } from "../../models/pokemonSpecie";
@@ -10,10 +11,13 @@ import type { pokemonAbilitiesModel, pokemonModel, pokemonTypeSlotModel } from "
 import { StatsCard } from "../../components/stats-card/StatsCard";
 import { TypeChart } from "../../components/type-chart/TypeChart";
 import './details.scss'
+import favoritesService from "../../services/favoritesService";
 
 export const Details = () => {
     const { specieId } = useParams()
     const [pokemonSpecie, setPokemonSpecie] = useState<pokemonSpecieModel>()
+    const [ganera, setGanera] = useState('')
+    const [isFemale, setIsFemale] = useState(false) 
     const [loadingSpecie, setLoadingSpecie] = useState(true);
 
     const [pokemonId, setPokemonId] = useState(0)
@@ -29,6 +33,10 @@ export const Details = () => {
             if(result) {
                 setPokemonSpecie(result)
                 setPokemonId(result.id)
+
+                const genus = result.genera.filter((f) => f.language.name.toLowerCase() == 'en')
+
+                setGanera(genus[0]?.genus || "")
             }
         } catch (err) {
 
@@ -49,6 +57,27 @@ export const Details = () => {
         } finally {
             setLoadingPokemon(false)
         }
+    }
+
+    const handleFavorite = async () => {
+        setLoadingSpecie(true)
+        if(pokemonSpecie) {
+            await favoritesService.handleFavorite({
+                name: pokemonSpecie.name,
+                url: "https://pokeapi.co/api/v2/pokemon-species/" + pokemonSpecie.id + '/'
+            })
+        }   
+        setLoadingSpecie(false)
+    }
+
+    const handleSizeString = (size: number) => {
+        const sizeAdjust = (size*0.1)
+        return +parseFloat(sizeAdjust.toString()).toFixed( 2 );
+    }
+
+    const playCry = () => {
+        var audio = new Audio(pokemon?.cries.latest);
+        audio.play();
     }
     
     useEffect(() => {
@@ -74,51 +103,87 @@ export const Details = () => {
                             <div className="pokedex-body">
                                 <section className="pokedex-header">
                                     <div className="name-container">
-                                        {pokemonSpecie.name}
+                                        <div className="specie-name">{pokemonSpecie.id} - {pokemonSpecie.name}</div>
+                                        <div className="ganera">{ganera}</div>
                                     </div>
                                     <div className="header-buttons">
-                                        <button className="goBack" title="Return" onClick={() => navigate('/')}>
+                                        <button className="button-back" title="Return" onClick={() => navigate('/')}>
                                             <FontAwesomeIcon icon={faAngleLeft} size="lg" />
                                         </button>
-                                        <button className="goBack" title="Return" onClick={() => navigate('/')}>
-                                            <FontAwesomeIcon icon={faAngleLeft} size="lg" />
+                                        <button
+                                            className="button-favorite"
+                                            title={favoritesService.isFavorite(pokemonSpecie.name) ? "Remove Favorite" : "Add Favorite"}
+                                            onClick={handleFavorite}
+                                        >
+                                            {favoritesService.isFavorite(pokemonSpecie.name) ? (
+                                                <FontAwesomeIcon icon={star} size="lg" />
+                                            ) : (
+                                                <FontAwesomeIcon icon={outlineStar} size="lg" />
+                                            )}
                                         </button>
-                                        <button className="goBack" title="Return" onClick={() => navigate('/')}>
-                                            <FontAwesomeIcon icon={faAngleLeft} size="lg" />
+                                        <button className="button-sound" title="Audio" onClick={playCry}>
+                                            <FontAwesomeIcon icon={faVolumeLow} size="lg" />
                                         </button>
                                     </div>
                                 </section>
                                 <section className="pokedex-section">
-                                    <div className="image-container">
-                                        <img src={pokemon.sprites.front_default}/>
-                                    </div>
+                                    <section className="sprite-section">
+                                        <div className="image-container">
+                                            {isFemale ? (
+                                                <img src={pokemon.sprites.front_female}/>
+                                            ) : (
+                                                <img src={pokemon.sprites.front_default}/>
+                                            )}
+                                        </div>
+                                        {pokemonSpecie.has_gender_differences && (
+                                            <div className="gender-container">
+                                                <button
+                                                    disabled={!isFemale} className="button-male"
+                                                    title="Male"  onClick={() => setIsFemale(!isFemale)}
+                                                >
+                                                    <FontAwesomeIcon icon={faMars} size="lg" />
+                                                </button>
+                                                <button
+                                                    disabled={isFemale} className="button-female"
+                                                    title="Female" onClick={() => setIsFemale(!isFemale)}
+                                                >
+                                                    <FontAwesomeIcon icon={faVenus} size="lg" />
+                                                </button>
+                                            </div>
+                                        )}
+                                    </section>
                                 </section>
                                 <section className="pokedex-section">
-                                    <section>
+                                    <section className="info-container">
                                         <div className="types-container">
                                             {pokemon.types.length > 1 ? (
                                                 <>
-                                                    <div className={`primary-type type-container type-${pokemon.types[0]?.type.name}`}>
+                                                    <div className={`primary-type-container type-${pokemon.types[0]?.type.name}`}>
                                                         {pokemon.types[0]?.type.name}
                                                     </div>
-                                                    <div className={`secondary-type type-container type-${pokemon.types[1]?.type.name}`}>
+                                                    <div className={`secondary-type-container type-${pokemon.types[1]?.type.name}`}>
                                                         {pokemon.types[1]?.type.name}
                                                     </div>
                                                 </>
                                             ) : (
-                                                <div className={`only-type type-container type-${pokemon.types[0]?.type.name}`}>
+                                                <div className={`only-type-container type-${pokemon.types[0]?.type.name}`}>
                                                     {pokemon.types[0]?.type.name}
                                                 </div>
                                             )}
                                         </div>
-                                        <div>
-                                            {pokemon.abilities.map((x: pokemonAbilitiesModel) => (<span>{x.ability.name}</span>))}
-                                        </div>
-                                        <div>
-                                            <span>Height: {pokemon.height}</span>
-                                        </div>
-                                        <div>
-                                            <span>Weight: {pokemon.weight}</span>
+                                        <section className="abilities-container">
+                                            <div className="abilities-title">Abilities</div>
+                                            <div className="abilities">
+                                                {pokemon.abilities.map((x: pokemonAbilitiesModel) => (<div>{x.ability.name}</div>))}
+                                            </div>
+                                        </section>
+                                        <div className="size-container">
+                                            <div className="size-section">
+                                                Height: {handleSizeString(pokemon.height)}m
+                                            </div>
+                                            <div className="size-section">
+                                                Weight: {handleSizeString(pokemon.weight)}Kg
+                                            </div>
                                         </div>
                                     </section>
                                     <div className="stats-container">

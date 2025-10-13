@@ -2,6 +2,7 @@ import type { baseModel } from "./base";
 
 interface pokemonSpritesModel {
     front_default: string;
+    front_female?: string;
 }
 
 export interface pokemonTypeSlotModel {
@@ -30,4 +31,8 @@ export interface pokemonModel {
     types: pokemonTypeSlotModel[];
     abilities: pokemonAbilitiesModel[];
     stats: pokemonStatsModel[];
+    cries: {
+        latest: string;
+        legacy: string;
+    }
 }
