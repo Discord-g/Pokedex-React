@@ -12,6 +12,7 @@ import { StatsCard } from "../../components/stats-card/StatsCard";
 import { TypeChart } from "../../components/type-chart/TypeChart";
 import './details.scss'
 import favoritesService from "../../services/favoritesService";
+import { VariationCard } from "../../components/variation-card/VariationCard";
 
 export const Details = () => {
     const { specieId } = useParams()
@@ -79,6 +80,10 @@ export const Details = () => {
         var audio = new Audio(pokemon?.cries.latest);
         audio.play();
     }
+
+    const selectVariation = (pokeId: number) => {
+        setPokemonId(pokeId)
+    }
     
     useEffect(() => {
         if(specieId) {
@@ -88,6 +93,7 @@ export const Details = () => {
 
      useEffect(() => {
         if(pokemonId) {
+            setIsFemale(false)
             getPokemon(pokemonId.toString())
         }
     }, [pokemonId])
@@ -104,6 +110,9 @@ export const Details = () => {
                                 <section className="pokedex-header">
                                     <div className="name-container">
                                         <div className="specie-name">{pokemonSpecie.id} - {pokemonSpecie.name}</div>
+                                        {pokemon.name.toLowerCase() !== pokemonSpecie.name.toLowerCase() && (
+                                            <div className="ganera">{pokemon.name}</div>
+                                        )}
                                         <div className="ganera">{ganera}</div>
                                     </div>
                                     <div className="header-buttons">
@@ -149,6 +158,17 @@ export const Details = () => {
                                                 >
                                                     <FontAwesomeIcon icon={faVenus} size="lg" />
                                                 </button>
+                                            </div>
+                                        )}
+                                    </section>
+                                    <section>
+                                        {pokemonSpecie.varieties.length > 1 && (
+                                            <div className="variations-container">
+                                                {pokemonSpecie.varieties.map((poke) => (
+                                                    <div className="variations">
+                                                        <VariationCard pokemonItem={poke.pokemon} choseVariation={selectVariation}/>
+                                                    </div>
+                                                ))}
                                             </div>
                                         )}
                                     </section>

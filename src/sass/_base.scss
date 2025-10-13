@@ -8,6 +8,8 @@ $pokedex-button2-color: #28aafe;
 $favorite-color: #fa8;
 $male-color: #3355FF;
 $female-color: #FF77DD;
+$white-color: #fff;
+$black-color: #000;
 
 $type-normal-color: #aa9;
 $type-fire-color: #f42;
@@ -76,7 +78,7 @@ button {
     border-radius: 5px;
     height: 100%;
     padding: 0.5em 1em;
-    color: $pokedex-screen-color;
+    color: $black-color;
 }
 
 %types {

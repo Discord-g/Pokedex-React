@@ -61,9 +61,7 @@ export const PokeCard = (props: myProp) => {
     return (
         <div className="card-container">
             {loading ? (
-                <div className="loader-container">
-                    <Loader />
-                </div>
+                <Loader />
             ) : (
                 <div className="card-body">
                     {pokemon && pokemonSpecie ? (
