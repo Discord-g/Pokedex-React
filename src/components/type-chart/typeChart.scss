@@ -18,13 +18,15 @@
     }
 
     .damage-title {
-        width: 25%;
+        width: 10em;
+        font-size: 12px;
+        font-weight: bold;
     }
 
     .types {
+        width: calc(100% - 12em);
         display: flex;
         flex-wrap: wrap;
-        width: 77%;
 
         .damage-type {
             @extend %type;
@@ -32,8 +34,9 @@
             border: solid 4px base.$pokedex-body-detail-color;
             padding: 0.5em;
             font-size: 0.8em;
-            min-width: 85px;
+            min-width: 120px;
             margin: 0 0.2em 0.2em 0;
+            font-size: 12px;
         }
     }
 }

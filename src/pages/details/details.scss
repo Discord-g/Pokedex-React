@@ -41,26 +41,24 @@
 
         .header-buttons {
             display: flex;
-        }
 
-        .button-favorite {
-            background-color: base.$pokedex-button2-color;
-            border: base.$pokedex-body-detail-color solid 2px;
-            border-radius: 5px;
-            height: 100%;
-            padding: 0.5em 1em;
-            color: base.$favorite-color;
-            margin-left: 0.5em;
-        }
+            button {
+                background-color: base.$pokedex-button2-color;
+                border: base.$pokedex-body-detail-color solid 2px;
+                border-radius: 5px;
+                height: 100%;
+                padding: 0.5em 1em;
+                color: base.$black-color;
+                margin-left: 0.5em;
+            }
 
-        .button-sound {
-            background-color: base.$pokedex-button2-color;
-            border: base.$pokedex-body-detail-color solid 2px;
-            border-radius: 5px;
-            height: 100%;
-            padding: 0.5em 1em;
-            color: base.$black-color;
-            margin-left: 0.5em;
+            .button-favorite {
+                color: base.$favorite-color;
+            }
+
+            button:nth-child(1) {
+                margin-left: 0;
+            }
         }
     }
 
@@ -100,13 +98,30 @@
         }
     }
 
-    .variations-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+    .evolutions-section {
+        text-align: center;
+        margin-bottom: 1em;
+        .evolution-title {
+            margin-bottom: 0.5em;
+        }
+    }
 
-        .variations {
-            margin: 0px 0.5em;
+    .variations-section {
+        text-align: center;
+
+        .varieties-title {
+            margin-bottom: 0.5em;
+        }
+
+        .variations-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+
+            .variations {
+                margin: 0px 0.5em;
+            }
         }
     }
 
@@ -133,7 +148,8 @@
             padding: 0.7em;
             border-right: 2px solid base.$pokedex-border-color;
             border-bottom: 8px solid base.$pokedex-border-color;
-            width: 50%
+            width: 50%;
+            font-size: 10px;
         }
 
         .secondary-type-container {
@@ -141,14 +157,16 @@
             padding: 0.7em;
             border-left: 2px solid base.$pokedex-border-color;
             border-bottom: 8px solid base.$pokedex-border-color;
-            width: 50%
+            width: 50%;
+            font-size: 10px;
         }
 
         .only-type-container {
             @extend %type;
             padding: 0.7em;
             border-bottom: 8px solid base.$pokedex-border-color;
-            width: 100%
+            width: 100%;
+            font-size: 12px;
         }
     }
 

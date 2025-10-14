@@ -1,0 +1,23 @@
+@use "../../sass/base.scss";
+
+.evolutions-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+
+    .evolution-arrow {
+        margin: 0px 0.8em;
+    }
+
+    .evolution-item {
+        margin: 0px 0.5em;
+    }
+
+    .multi-evolve {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+}

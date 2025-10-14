@@ -16,4 +16,7 @@ export interface pokemonSpecieModel {
     has_gender_differences: boolean;
     varieties: pokemonVarietieModel[];
     genera: pokemonGaneraModel[];
+    evolution_chain: {
+        url: string;
+    }
 }

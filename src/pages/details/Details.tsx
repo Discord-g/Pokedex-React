@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faStar as star, faAngleLeft, faVolumeLow, faMars, faVenus } from '@fortawesome/free-solid-svg-icons'
+import { faStar as star, faAngleLeft, faVolumeLow, faMars, faVenus, faAngleRight, faHouse } from '@fortawesome/free-solid-svg-icons'
 import { faStar as outlineStar } from '@fortawesome/free-regular-svg-icons'
 import { Loader } from "../../components/loader/Loader";
 import pokemonSpecieService from "../../services/pokemonSpecieService";
@@ -13,6 +13,7 @@ import { TypeChart } from "../../components/type-chart/TypeChart";
 import './details.scss'
 import favoritesService from "../../services/favoritesService";
 import { VariationCard } from "../../components/variation-card/VariationCard";
+import { EvolutionLine } from "../../components/evolution-line/EvolutionLine";
 
 export const Details = () => {
     const { specieId } = useParams()
@@ -84,6 +85,26 @@ export const Details = () => {
     const selectVariation = (pokeId: number) => {
         setPokemonId(pokeId)
     }
+
+    const selectEvolution = (pokeId: number) => {
+        navigate(`/details/${pokeId}`)
+    }
+
+    const handleNavigate = (direction: string) => {
+        if(direction == 'next') {
+            if(specieId == '1025') {
+                navigate('/details/1')
+            } else {
+                navigate(`/details/${Number(specieId)+1}`)
+            }
+        } else {
+            if(specieId == '1') {
+                navigate('/details/1025')
+            } else {
+                navigate(`/details/${Number(specieId)-1}`)
+            }
+        }
+    }
     
     useEffect(() => {
         if(specieId) {
@@ -116,8 +137,11 @@ export const Details = () => {
                                         <div className="ganera">{ganera}</div>
                                     </div>
                                     <div className="header-buttons">
-                                        <button className="button-back" title="Return" onClick={() => navigate('/')}>
+                                        <button title="Last" onClick={() => handleNavigate('last')}>
                                             <FontAwesomeIcon icon={faAngleLeft} size="lg" />
+                                        </button>
+                                        <button className="button-back" title="Home" onClick={() => navigate('/')}>
+                                            <FontAwesomeIcon icon={faHouse} size="lg" />
                                         </button>
                                         <button
                                             className="button-favorite"
@@ -130,8 +154,11 @@ export const Details = () => {
                                                 <FontAwesomeIcon icon={outlineStar} size="lg" />
                                             )}
                                         </button>
-                                        <button className="button-sound" title="Audio" onClick={playCry}>
+                                        <button title="Audio" onClick={playCry}>
                                             <FontAwesomeIcon icon={faVolumeLow} size="lg" />
+                                        </button>
+                                        <button title="Next" onClick={() => handleNavigate('next')}>
+                                            <FontAwesomeIcon icon={faAngleRight} size="lg" />
                                         </button>
                                     </div>
                                 </section>
@@ -144,7 +171,7 @@ export const Details = () => {
                                                 <img src={pokemon.sprites.front_default}/>
                                             )}
                                         </div>
-                                        {pokemonSpecie.has_gender_differences && (
+                                        {(pokemonSpecie.has_gender_differences && pokemon.sprites.front_female) && (
                                             <div className="gender-container">
                                                 <button
                                                     disabled={!isFemale} className="button-male"
@@ -162,13 +189,20 @@ export const Details = () => {
                                         )}
                                     </section>
                                     <section>
+                                        <div className="evolutions-section">
+                                            <div className="evolution-title">Evolution Line</div>
+                                            <EvolutionLine chosePokemon={selectEvolution} chainUrl={pokemonSpecie.evolution_chain.url} />
+                                        </div>
                                         {pokemonSpecie.varieties.length > 1 && (
-                                            <div className="variations-container">
-                                                {pokemonSpecie.varieties.map((poke) => (
-                                                    <div className="variations">
-                                                        <VariationCard pokemonItem={poke.pokemon} choseVariation={selectVariation}/>
-                                                    </div>
-                                                ))}
+                                            <div className="variations-section">
+                                                <div className="varieties-title">Varieties</div>
+                                                <div className="variations-container">
+                                                    {pokemonSpecie.varieties.map((poke) => (
+                                                        <div className="variations">
+                                                            <VariationCard pokemonItem={poke.pokemon} choseVariation={selectVariation}/>
+                                                        </div>
+                                                    ))}
+                                                </div>
                                             </div>
                                         )}
                                     </section>
