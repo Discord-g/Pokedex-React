@@ -5,22 +5,20 @@
     justify-content: space-between;
     align-items: center;
 
-    .button-pagination {
-        background-color: base.$pokedex-button2-color;
-        border: base.$pokedex-body-detail-color solid 2px;
-        border-radius: 5px;
-        height: 100%;
-        padding: 0.5em 1em;
-        color: base.$black-color;
+    button {
         margin: 0px 0.5em;
     }
 
-    .select-pagination {
+    select {
         background-color: base.$pokedex-screen-color;
         color: base.$pokedex-border-color;
         border: base.$pokedex-border-color solid 2px;
         border-radius: 5px;
         cursor: pointer;
         padding: 0.5em 1em;
+    }
+
+    select:disabled {
+        cursor: default;
     }
 }

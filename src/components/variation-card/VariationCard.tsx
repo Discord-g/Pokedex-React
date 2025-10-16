@@ -4,14 +4,16 @@ import type { pokemonModel } from "../../models/pokemon";
 import { Loader } from "../loader/Loader";
 import pokemonService from "../../services/pokemonService";
 import "./variationCard.scss"
+import utils from "../../services/utils";
 
 interface myProp {
+    currentPokemonId: number,
     pokemonItem: pokemonListItemModel,
     choseVariation(pokeId: number):void
 }
 
 export const VariationCard = (props: myProp) => {
-    const { pokemonItem, choseVariation } = props;
+    const { pokemonItem, choseVariation, currentPokemonId } = props;
     const [loading, setLoading] = useState(true);
     const [pokemon, setPokemon] = useState<pokemonModel>()
 
@@ -28,31 +30,34 @@ export const VariationCard = (props: myProp) => {
     }
 
     const handleSelect = () => {
-        if(!loading && pokemon?.id) {
+        if(!loading && pokemon?.id && pokemon?.id != currentPokemonId) {
             choseVariation(pokemon.id)
         }
     }
 
     useEffect(() => {
         if(pokemonItem.url) {
-            let urlList = pokemonItem.url.split('/')
-            urlList.pop()
-            const id = urlList.pop()
+            const id = utils.getIdFromUrl(pokemonItem.url)
 
             if(id) loadPokemon(id)
         }
     }, [pokemonItem])
     
     return (
-        <div title={pokemon?.name} className="variation-container" onClick={handleSelect}>
+        <div
+            title={pokemon?.name} className={
+                `${pokemon?.id == currentPokemonId ?
+                    'variation-container-current-pokemon' : 'variation-container'
+                } image-container`} 
+                onClick={handleSelect}>
             {loading ? (
                 <Loader />
             ) : (
                 <>
                     {pokemon ? (
-                        <img title={pokemon.name} src={pokemon?.sprites.front_default}/>
+                        <img title={pokemon.name} src={pokemon.sprites.front_default || utils.getDefaultImage()}/>
                     ) : (
-                        <div>?</div>
+                        <img src={utils.getDefaultImage()}/>
                     )}
                 </>
             )}

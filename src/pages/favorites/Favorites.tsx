@@ -7,6 +7,7 @@ import type { pokemonListItemModel } from "../../models/pokemonListItem";
 import { PokeCard } from "../../components/poke-cards/PokeCard";
 import favoritesService from "../../services/favoritesService";
 import '../../sass/_list.scss'
+import utils from "../../services/utils";
 
 export const Favorites = () => {
     const [loading, setLoading] = useState(true);
@@ -31,7 +32,7 @@ export const Favorites = () => {
     return (
         <>
             <header>
-                <button className="button-back" title="Return" onClick={() => navigate('/')}>
+                <button disabled={loading} title="Return" onClick={() => navigate('/')}>
                     <FontAwesomeIcon icon={faAngleLeft} size="lg" />
                 </button>
             </header>
@@ -39,15 +40,22 @@ export const Favorites = () => {
                 {loading ? (
                     <Loader />
                 ) : (
-                    <div className="list-container">
-                        <div className="itens-container">
-                            {currentList.map((item: pokemonListItemModel, index: number) => (
-                                <div key={index} className="item">
-                                    <PokeCard pokemonItem={item} postFavorite={getList}/>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
+                    <>
+                        {currentList.length > 0 ? (
+                            <div className="list-container">
+                                {currentList.map((item: pokemonListItemModel, index: number) => (
+                                    <div key={index} className="item">
+                                        <PokeCard pokemonItem={item} postFavorite={getList}/>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="no-data-container">
+                                <img src={utils.getDefaultImage()}/>
+                                <div>No data</div>
+                            </div>
+                        )}
+                    </>
                 )}
             </main>
         </>

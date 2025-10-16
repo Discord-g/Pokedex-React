@@ -19,13 +19,11 @@ export const Pagination = (props: myProp) => {
                 disabled={loading || currentPage <= 1}
                 onClick={() => setPage(currentPage-1)}
                 title="Last"
-                className="button-pagination"
             >
                 <FontAwesomeIcon icon={faAngleLeft} size="lg" />
             </button>
             {!loading && (
                 <select
-                    className="select-pagination"
                     disabled={loading} value={currentPage}
                     onChange={(e) => setPage(Number(e.target.value))}
                     title="Select Page"
@@ -35,12 +33,10 @@ export const Pagination = (props: myProp) => {
                     ))}
                 </select>
             )}
-            
             <button
                 disabled={loading || currentPage >= totalPages}
                 onClick={() => setPage(currentPage+1)}
                 title="Next"
-                className="button-pagination"
             >
                 <FontAwesomeIcon icon={faAngleRight} size="lg" />
             </button>

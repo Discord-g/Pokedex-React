@@ -8,6 +8,7 @@ import { Loader } from "../../components/loader/Loader"
 import { PokeCard } from "../../components/poke-cards/PokeCard"
 import { Pagination } from "../../components/pagination/Pagination"
 import './home.scss'
+import utils from "../../services/utils"
 
 export const Home = () => {
     const [loading, setLoading] = useState<boolean>(true)
@@ -65,6 +66,8 @@ export const Home = () => {
             } else {
                 setPage(1)
             }
+        } else {
+            handleClear()
         }
     }
 
@@ -88,39 +91,45 @@ export const Home = () => {
 
     return (
         <>
-            <header>
-                <div className="filter-container">
-                    <input
-                        value={search}
-                        className="search-input"
-                        onChange={(e) => handleSearchInput(e.target.value)}
-                    />
-                    <section className="filter-buttons">
-                        <button onClick={handleSearch} title="Search">
-                            <FontAwesomeIcon icon={faMagnifyingGlass} size="lg" />
-                        </button>
-                        <button onClick={handleClear} title="Clear">
-                            <FontAwesomeIcon icon={faBroom} size="lg" />
-                        </button>
-                        <button onClick={() => navigate('/favorites')} title="Favorites">
-                            <FontAwesomeIcon icon={faStar} size="lg" />
-                        </button>
-                    </section>
-                </div>
+            <header className="filter-container">
+                <input
+                    value={search}
+                    className="search-input"
+                    disabled={loading}
+                    onChange={(e) => handleSearchInput(e.target.value)}
+                />
+                <section className="filter-buttons">
+                    <button disabled={loading} onClick={handleSearch} title="Search">
+                        <FontAwesomeIcon icon={faMagnifyingGlass} size="lg" />
+                    </button>
+                    <button disabled={loading} onClick={handleClear} title="Clear">
+                        <FontAwesomeIcon icon={faBroom} size="lg" />
+                    </button>
+                    <button disabled={loading} onClick={() => navigate('/favorites')} title="Favorites">
+                        <FontAwesomeIcon icon={faStar} size="lg" />
+                    </button>
+                </section>
             </header>
             <main className="main-home">
                 {loading ? (
                     <Loader />
                 ) : (
-                    <div className="list-container">
-                        <div className="itens-container">
-                            {currentList.map((item: pokemonListItemModel, index: number) => (
-                                <div key={index} className="item">
-                                    <PokeCard pokemonItem={item}/>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
+                    <>
+                        {currentList.length > 0 ? (
+                            <div className="list-container">
+                                {currentList.map((item: pokemonListItemModel, index: number) => (
+                                    <div key={index} className="item">
+                                        <PokeCard pokemonItem={item}/>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="no-data-container">
+                                <img src={utils.getDefaultImage()}/>
+                                <div>No data</div>
+                            </div>
+                        )}
+                    </>
 
                 )}
             </main>

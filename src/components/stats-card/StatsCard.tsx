@@ -46,8 +46,8 @@ export const StatsCard = (props: myProp) => {
         <>
             {pokemonStats && (
                 <>
-                    {pokemonStats.map((pokemonStat: pokemonStatsModel) => (
-                        <div className="stat-body">
+                    {pokemonStats.map((pokemonStat: pokemonStatsModel, i) => (
+                        <div className="stat-body" key={i}>
                             <section className="stat-name">
                                 {getNameStat(pokemonStat.stat.name)}: {pokemonStat.base_stat}
                             </section>

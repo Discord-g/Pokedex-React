@@ -5,6 +5,7 @@ import { faStar as star, faAngleLeft, faVolumeLow, faMars, faVenus, faAngleRight
 import { faStar as outlineStar } from '@fortawesome/free-regular-svg-icons'
 import { Loader } from "../../components/loader/Loader";
 import pokemonSpecieService from "../../services/pokemonSpecieService";
+import utils from '../../services/utils'
 import type { pokemonSpecieModel } from "../../models/pokemonSpecie";
 import pokemonService from "../../services/pokemonService";
 import type { pokemonAbilitiesModel, pokemonModel, pokemonTypeSlotModel } from "../../models/pokemon";
@@ -125,22 +126,22 @@ export const Details = () => {
                 {(loadingSpecie || loadingPokemon) ? (
                     <Loader />
                 ) : (
-                    <>
-                        {(pokemonSpecie && pokemon) && (
-                            <div className="pokedex-body">
+                    <div className="pokedex-body">
+                        {(pokemonSpecie && pokemon) ? (
+                            <>
                                 <section className="pokedex-header">
                                     <div className="name-container">
                                         <div className="specie-name">{pokemonSpecie.id} - {pokemonSpecie.name}</div>
                                         {pokemon.name.toLowerCase() !== pokemonSpecie.name.toLowerCase() && (
-                                            <div className="ganera">{pokemon.name}</div>
+                                            <div>{pokemon.name}</div>
                                         )}
-                                        <div className="ganera">{ganera}</div>
+                                        <div>{ganera}</div>
                                     </div>
                                     <div className="header-buttons">
                                         <button title="Last" onClick={() => handleNavigate('last')}>
                                             <FontAwesomeIcon icon={faAngleLeft} size="lg" />
                                         </button>
-                                        <button className="button-back" title="Home" onClick={() => navigate('/')}>
+                                        <button title="Home" onClick={() => navigate('/')}>
                                             <FontAwesomeIcon icon={faHouse} size="lg" />
                                         </button>
                                         <button
@@ -164,11 +165,11 @@ export const Details = () => {
                                 </section>
                                 <section className="pokedex-section">
                                     <section className="sprite-section">
-                                        <div className="image-container">
+                                        <div className="image-container detail-main-sprite">
                                             {isFemale ? (
-                                                <img src={pokemon.sprites.front_female}/>
+                                                <img className="pokemon-idle" src={pokemon.sprites.front_female}/>
                                             ) : (
-                                                <img src={pokemon.sprites.front_default}/>
+                                                <img className="pokemon-idle" src={pokemon.sprites.front_default || utils.getDefaultImage()}/>
                                             )}
                                         </div>
                                         {(pokemonSpecie.has_gender_differences && pokemon.sprites.front_female) && (
@@ -189,17 +190,17 @@ export const Details = () => {
                                         )}
                                     </section>
                                     <section>
-                                        <div className="evolutions-section">
-                                            <div className="evolution-title">Evolution Line</div>
-                                            <EvolutionLine chosePokemon={selectEvolution} chainUrl={pokemonSpecie.evolution_chain.url} />
+                                        <div className="forms-section evolutions-section">
+                                            <div className="forms-title">Evolution Line</div>
+                                            <EvolutionLine currentSpecieId={Number(specieId) || 0} chosePokemon={selectEvolution} chainUrl={pokemonSpecie.evolution_chain.url} />
                                         </div>
                                         {pokemonSpecie.varieties.length > 1 && (
-                                            <div className="variations-section">
-                                                <div className="varieties-title">Varieties</div>
+                                            <div className="forms-section">
+                                                <div className="forms-title">Varieties</div>
                                                 <div className="variations-container">
-                                                    {pokemonSpecie.varieties.map((poke) => (
-                                                        <div className="variations">
-                                                            <VariationCard pokemonItem={poke.pokemon} choseVariation={selectVariation}/>
+                                                    {pokemonSpecie.varieties.map((poke, i) => (
+                                                        <div className="variations" key={i}>
+                                                            <VariationCard currentPokemonId={pokemonId} pokemonItem={poke.pokemon} choseVariation={selectVariation}/>
                                                         </div>
                                                     ))}
                                                 </div>
@@ -212,15 +213,15 @@ export const Details = () => {
                                         <div className="types-container">
                                             {pokemon.types.length > 1 ? (
                                                 <>
-                                                    <div className={`primary-type-container type-${pokemon.types[0]?.type.name}`}>
+                                                    <div className={`pokemon-type primary-type-container type-${pokemon.types[0]?.type.name}`}>
                                                         {pokemon.types[0]?.type.name}
                                                     </div>
-                                                    <div className={`secondary-type-container type-${pokemon.types[1]?.type.name}`}>
+                                                    <div className={`pokemon-type secondary-type-container type-${pokemon.types[1]?.type.name}`}>
                                                         {pokemon.types[1]?.type.name}
                                                     </div>
                                                 </>
                                             ) : (
-                                                <div className={`only-type-container type-${pokemon.types[0]?.type.name}`}>
+                                                <div className={`pokemon-type only-type-container type-${pokemon.types[0]?.type.name}`}>
                                                     {pokemon.types[0]?.type.name}
                                                 </div>
                                             )}
@@ -228,7 +229,7 @@ export const Details = () => {
                                         <section className="abilities-container">
                                             <div className="abilities-title">Abilities</div>
                                             <div className="abilities">
-                                                {pokemon.abilities.map((x: pokemonAbilitiesModel) => (<div>{x.ability.name}</div>))}
+                                                {pokemon.abilities.map((x: pokemonAbilitiesModel, i) => (<div key={i}>{x.ability.name}</div>))}
                                             </div>
                                         </section>
                                         <div className="size-container">
@@ -247,9 +248,30 @@ export const Details = () => {
                                 <section className="typechart-container">
                                     <TypeChart pokemonTypes={pokemon.types} />
                                 </section>
-                            </div>
+                            </>
+                        ) : (
+                            <>
+                                <section className="pokedex-header">
+                                    <div className="name-container">
+                                        <div className="specie-name">No data</div>
+                                    </div>
+                                    <div className="header-buttons">
+                                        <button title="Home" onClick={() => navigate('/')}>
+                                            <FontAwesomeIcon icon={faHouse} size="lg" />
+                                        </button>
+                                    </div>
+                                </section>
+
+                                <section className="pokedex-section">
+                                    <section className="sprite-section">
+                                        <div className="image-container detail-main-sprite">
+                                            <img src={utils.getDefaultImage()}/>
+                                        </div>
+                                    </section>
+                                </section>
+                            </>
                         )}
-                    </>
+                    </div>
                 )}
             </div>
         </main>

@@ -1,19 +1,22 @@
-.list-container {
-    padding: 2em;
-    width: 100%;
-    height: fit-content;
+@use "base";
+
+.no-data-container {
+    color: base.$pokedex-border-color;
+    margin: auto;
 }
 
-.itens-container {
-    width: 100%;
+.list-container {
+    margin: 2em auto;
+    width: 90%;    
+    height: fit-content;
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
+    align-items: stretch;
     justify-content: flex-start;
-
+    
     .item {
         width: 30%;
-        margin: 1% 1.6%;
+        margin: 1% 2.5%;
     }
 
     .item:nth-child(3n+1){
@@ -22,5 +25,57 @@
 
     .item:nth-child(3n){
         margin-right: 0%;
+    }
+}
+
+@media (max-width: 1024px) {
+    .list-container {   
+        .item {
+            width: 47.5%;
+            margin: 2% 2.5%;
+        }
+
+        .item:nth-child(3n+1){
+            margin-left: auto;
+        }
+
+        .item:nth-child(3n){
+           margin-right: auto;
+        }
+
+        .item:nth-child(2n+1){
+            margin-left: 0%;
+        }
+
+        .item:nth-child(2n){
+            margin-right: 0%;
+        }
+    }
+}
+
+@media (max-width: 767px) {
+    .list-container {  
+        margin: 1em auto;
+
+        .item {
+            width: 96%;
+            margin: 5% 2%;
+        }
+
+        .item:nth-child(3n+1){
+            margin-left: auto;
+        }
+
+        .item:nth-child(3n){
+           margin-right: auto;
+        }
+
+        .item:nth-child(2n+1){
+            margin-left: auto;
+        }
+
+        .item:nth-child(2n){
+            margin-right: auto;
+        }
     }
 }

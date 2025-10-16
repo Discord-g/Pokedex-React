@@ -1,29 +1,40 @@
 @use '../../sass/list';
 @use "../../sass/base";
 
+.main-home {
+    height: calc(100vh - 89.31px - 91.31px);
+}
+
 .filter-container {
     display: flex;
     justify-content: center;
     align-items: center;
 
     input {
+        background-color: base.$pokedex-screen-color;
+        padding: 0.5em;
+        border: base.$pokedex-border-color solid 2px;
+        border-radius: 5px;
         margin-right: 2em;
         color: base.$pokedex-border-color;
     }
 
+    input:focus-visible {
+        outline: 0px;
+        border-color: base.$pokedex-body-detail-color;
+    }
+
+    input:disabled {
+        opacity: 0.7;
+    }
+
     .filter-buttons {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+        @extend %flex-center-center;
         height: -moz-available;          /* WebKit-based browsers will ignore this. */
         height: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
 
         button {
             background-color: base.$pokedex-button1-color;
-            border: base.$pokedex-body-detail-color solid 2px;
-            border-radius: 5px;
-            height: 100%;
-            padding: 0.5em 1em;
             color: base.$white-color;
         }
 
@@ -31,20 +42,23 @@
             margin: 0 1em;
         }
     }
-
-    .search-input {
-        background-color: base.$pokedex-screen-color;
-        padding: 0.5em;
-        border: base.$pokedex-border-color solid 2px;
-        border-radius: 5px;
-    }
-
-
-    .search-input:focus-visible {
-        outline: 0px;
-    }
 }
 
-.main-home {
-    height: calc(100vh - 89.31px - 91.31px);
+@media (max-width: 767px) {
+    .main-home {
+        height: calc(100vh - 131.28px - 91.31px);
+    }
+
+    .filter-container {
+        flex-direction: column;
+
+        input {
+            margin-right: 0;
+        }
+
+        .filter-buttons {
+            width: 100%;
+            margin-top: 0.5em;
+        }
+    }
 }

@@ -9,11 +9,12 @@ import './evolutionLine.scss'
 
 interface myProp {
     chainUrl: string,
+    currentSpecieId: number,
     chosePokemon(pokeId: number):void
 }
 
 export const EvolutionLine = (props: myProp) => {
-    const { chainUrl, chosePokemon } = props;
+    const { chainUrl, chosePokemon, currentSpecieId } = props;
     const [loading, setLoading] = useState(true);
     const [line, setLine] = useState<evolutionChainModel>()
 
@@ -47,7 +48,7 @@ export const EvolutionLine = (props: myProp) => {
                         {chains.map((chain) => (
                             <div className="multi-evolve">
                                 <div className="evolution-item">
-                                    <VariationCard pokemonItem={chain.species} choseVariation={handleSelect} />
+                                    <VariationCard currentPokemonId={currentSpecieId} pokemonItem={chain.species} choseVariation={handleSelect} />
                                 </div>
                                 {handleEvolutions(chain.evolves_to)}
                             </div>
@@ -83,15 +84,13 @@ export const EvolutionLine = (props: myProp) => {
                 <Loader />
             ) : (
                 <>
-                    {line ? (
+                    {line && (
                         <>
                             <div className="evolution-item">
-                                <VariationCard pokemonItem={line.chain.species} choseVariation={handleSelect} />
+                                <VariationCard currentPokemonId={currentSpecieId} pokemonItem={line.chain.species} choseVariation={handleSelect} />
                             </div>
                             {handleEvolutions(line.chain.evolves_to)}
                         </>
-                    ) : (
-                        <div>?</div>
                     )}
                 </>
             )}

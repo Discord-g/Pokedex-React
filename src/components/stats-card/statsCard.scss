@@ -13,10 +13,9 @@
 
     .stat-value {
         width: 250px;
-    }
-
-    .stat-line {
-        height: 0.8em;
-        border-radius: 4px;
+        .stat-line {
+            height: 0.8em;
+            border-radius: 4px;
+        }
     }
 }

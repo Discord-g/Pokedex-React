@@ -9,213 +9,224 @@
     background-color: base.$pokedex-body-color;
     margin: 2em auto;
     width: 80%;
+    max-width: 900px;
     border-radius: 16px 0px 16px 0px;
     border: base.$pokedex-body-detail-color solid 8px;
     padding: 1.5em;
-}
 
-.pokedex-body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    .pokedex-body {
+        @extend %flex-between-center;
+        flex-direction: column;
 
-    .pokedex-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        width: 100%;
+        .pokedex-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            width: 100%;
 
-        .name-container {
-            background-color: base.$pokedex-screen-color;
-            border: 4px solid base.$pokedex-border-color;
-            border-radius: 10px;
-            padding: 1em;
-            color: base.$pokedex-border-color;
-            min-width: 25%;
+            .name-container {
+                background-color: base.$pokedex-screen-color;
+                border: 4px solid base.$pokedex-border-color;
+                border-radius: 10px;
+                padding: 1em;
+                color: base.$pokedex-border-color;
+                min-width: 25%;
 
-            .specie-name {
-                text-transform: uppercase;
-                
+                .specie-name {
+                    text-transform: uppercase;
+                }
+            }
+
+            .header-buttons {
+                @extend %flex-between-center;
+
+                button {
+                    margin-left: 0.5em;
+                }
+
+                button:nth-child(1) {
+                    margin-left: 0;
+                }
             }
         }
 
-        .header-buttons {
+        .pokedex-section {
             display: flex;
+            width: 100%;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-top: 1em;
+        }
+
+        // Section 1
+
+        .sprite-section {
+            margin-bottom: 1.5em;
+
+            .detail-main-sprite {
+                padding: 1.5em;
+                img {
+                    width: 180px;
+                }
+            }
+
+            .gender-container {
+                @extend %flex-end-center;
+                margin-top: 0.5em;
+            }
 
             button {
-                background-color: base.$pokedex-button2-color;
-                border: base.$pokedex-body-detail-color solid 2px;
-                border-radius: 5px;
-                height: 100%;
-                padding: 0.5em 1em;
-                color: base.$black-color;
-                margin-left: 0.5em;
+                color: base.$white-color;
             }
 
-            .button-favorite {
-                color: base.$favorite-color;
+            .button-male {
+                background-color: base.$male-color;
             }
 
-            button:nth-child(1) {
-                margin-left: 0;
+            .button-female {
+                background-color: base.$female-color;
+                margin-left: 0.2em;
             }
         }
-    }
 
-    .sprite-section {
-        margin-bottom: 1.5em;
-        .image-container {
+        .forms-section {
+            text-align: center;
+
+            .forms-title {
+                margin-bottom: 0.5em;
+            }
+
+            .variations-container {
+                @extend %flex-center-center;
+                flex-wrap: wrap;
+
+                .variations {
+                    margin: 0px 0.5em;
+                }
+            }
+        }
+
+        .evolutions-section {
+            margin-bottom: 1em;
+        }
+
+        // Section 2
+
+        .info-container {
             background-color: base.$pokedex-screen-color;
             border: 8px solid base.$pokedex-border-color;
             border-radius: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 2em;
-        }
 
-        .gender-container {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            margin-top: 0.5em;
-        }
+            .types-container {
+                @extend %types;
 
-        button {
-            border: base.$pokedex-body-detail-color solid 2px;
-            border-radius: 5px;
-            padding: 0.5em 1em;
-            color: base.$white-color;
-        }
+                .pokemon-type {
+                    @extend %type;
+                    padding: 0.7em;
+                    border-bottom: 8px solid base.$pokedex-border-color;
+                }
 
-        .button-male {
-            background-color: base.$male-color;
-        }
+                .primary-type-container {
+                    border-right: 2px solid base.$pokedex-border-color;
+                    width: 50%;
+                    font-size: 10px;
+                }
 
-        .button-female {
-            background-color: base.$female-color;
-            margin-left: 0.2em;
-        }
-    }
+                .secondary-type-container {
+                    border-left: 2px solid base.$pokedex-border-color;
+                    width: 50%;
+                    font-size: 10px;
+                }
 
-    .evolutions-section {
-        text-align: center;
-        margin-bottom: 1em;
-        .evolution-title {
-            margin-bottom: 0.5em;
-        }
-    }
-
-    .variations-section {
-        text-align: center;
-
-        .varieties-title {
-            margin-bottom: 0.5em;
-        }
-
-        .variations-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-
-            .variations {
-                margin: 0px 0.5em;
-            }
-        }
-    }
-
-    .stats-container {
-        background-color: white;
-        border: 8px solid base.$pokedex-body-detail-color;
-        border-radius: 10px;
-        padding: 1em;
-    }
-
-    .pokedex-section {
-        display: flex;
-        width: 100%;
-        justify-content: space-between;
-        align-items: flex-start;
-        margin-top: 1em;
-    }
-
-    .types-container {
-        @extend %types;
-
-        .primary-type-container {
-            @extend %type;
-            padding: 0.7em;
-            border-right: 2px solid base.$pokedex-border-color;
-            border-bottom: 8px solid base.$pokedex-border-color;
-            width: 50%;
-            font-size: 10px;
-        }
-
-        .secondary-type-container {
-            @extend %type;
-            padding: 0.7em;
-            border-left: 2px solid base.$pokedex-border-color;
-            border-bottom: 8px solid base.$pokedex-border-color;
-            width: 50%;
-            font-size: 10px;
-        }
-
-        .only-type-container {
-            @extend %type;
-            padding: 0.7em;
-            border-bottom: 8px solid base.$pokedex-border-color;
-            width: 100%;
-            font-size: 12px;
-        }
-    }
-
-    .typechart-container {
-        background-color: white;
-        border: 8px solid base.$pokedex-body-detail-color;
-        border-radius: 10px;
-        display: flex;
-        padding: 1em;
-        margin-top: 1em;
-        width: -moz-available;          /* WebKit-based browsers will ignore this. */
-        width: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
-    }
-
-    .info-container {
-        background-color: base.$pokedex-screen-color;
-        border: 8px solid base.$pokedex-border-color;
-        border-radius: 10px;
-
-        .abilities-container {
-            padding: 0.3em;
-            border-bottom: 8px solid base.$pokedex-border-color;
-
-            .abilities-title {
-                text-transform: uppercase;
-                color: base.$pokedex-border-color;
-                text-align: center;
-                margin-bottom: 0.5em;
-                border-bottom: 2px solid base.$pokedex-border-color;
+                .only-type-container {
+                    width: 100%;
+                    font-size: 12px;
+                }
             }
 
-            .abilities {
-                display: flex;
-                justify-content: flex-start;
-                align-items: center;
+            .abilities-container {
+                padding: 0.3em;
+                border-bottom: 8px solid base.$pokedex-border-color;
+
+                .abilities-title {
+                    text-transform: uppercase;
+                    color: base.$pokedex-border-color;
+                    text-align: center;
+                    margin-bottom: 0.5em;
+                    border-bottom: 2px solid base.$pokedex-border-color;
+                }
+
+                .abilities {
+                    @extend %flex-start-center;
+                    flex-direction: column;
+                    color: base.$pokedex-border-color;
+                }
+            }
+
+            .size-container {
+                padding: 0.4em;
+
+                .size-section {
+                    color: base.$pokedex-border-color;
+                }
+
+                .size-section:nth-child(1) {
+                    border-bottom: 2px solid base.$pokedex-border-color;
+                }
+            }
+        }
+
+        .stats-container {
+            background-color: white;
+            border: 8px solid base.$pokedex-body-detail-color;
+            border-radius: 10px;
+            padding: 1em;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: -moz-available;          /* WebKit-based browsers will ignore this. */
+            height: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
+        }
+
+        // Section 3
+
+        .typechart-container {
+            background-color: white;
+            border: 8px solid base.$pokedex-body-detail-color;
+            border-radius: 10px;
+            padding: 1em;
+            margin-top: 1em;
+        }
+    }
+}
+
+@media (max-width: 935px) {
+    .pokedex-container {
+        .pokedex-body {
+            .pokedex-section {
                 flex-direction: column;
-                color: base.$pokedex-border-color;
+                align-items: center;
+            }
+
+            .stats-container {
+                margin-top: 1em;
+                width: -moz-available;          /* WebKit-based browsers will ignore this. */
+                width: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
             }
         }
+    }
+}
 
-        .size-container {
-            padding: 0.4em;
-
-            .size-section {
-                color: base.$pokedex-border-color;
-            }
-
-            .size-section:nth-child(1) {
-                border-bottom: 2px solid base.$pokedex-border-color;
+@media (max-width: 800px) {
+    .pokedex-container {
+        .pokedex-body {
+            .pokedex-header {
+                flex-direction: column-reverse;
+                .name-container {
+                    margin-top: 0.5em;
+                    width: -moz-available;          /* WebKit-based browsers will ignore this. */
+                    width: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
+                }
             }
         }
     }
