@@ -19,3 +19,22 @@
         }
     }
 }
+
+@media (max-width: 700px) {
+    .stat-body {
+        .stat-value {
+            width: 150px;
+        }
+    }
+}
+
+@media (max-width: 500px) {
+    .stat-name {
+        font-size: 0.5em;
+    }
+    .stat-body {
+        .stat-value {
+            width: 80px;
+        }
+    }
+}
