@@ -35,6 +35,10 @@
     .stat-body {
         .stat-value {
             width: 80px;
+            .stat-line {
+                height: 0.4em;
+                border-radius: 2px;
+            }
         }
     }
 }

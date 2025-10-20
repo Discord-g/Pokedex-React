@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons'
 import './pagination.scss'
@@ -12,6 +12,11 @@ interface myProp {
 
 export const Pagination = (props: myProp) => {
     const { currentPage, setPage, loading, totalPages } = props;
+    const [pages, setPages] = useState(0)
+
+    useEffect(() => {
+        setPages(totalPages)
+    }, [totalPages])
 
     return (
         <div className="pagination-container">
@@ -22,19 +27,17 @@ export const Pagination = (props: myProp) => {
             >
                 <FontAwesomeIcon icon={faAngleLeft} size="lg" />
             </button>
-            {!loading && (
-                <select
-                    disabled={loading} value={currentPage}
-                    onChange={(e) => setPage(Number(e.target.value))}
-                    title="Select Page"
-                >
-                    {[...Array(totalPages)].map((val, index) => (
-                        <option value={totalPages-index}>{totalPages-index}</option>
-                    ))}
-                </select>
-            )}
+            <select
+                disabled={loading || pages <= 1} value={currentPage}
+                onChange={(e) => setPage(Number(e.target.value))}
+                title="Select Page"
+            >
+                {[...Array(pages)].map((val, index) => (
+                    <option value={pages-index}>{pages-index}</option>
+                ))}
+            </select>
             <button
-                disabled={loading || currentPage >= totalPages}
+                disabled={loading || currentPage >= pages}
                 onClick={() => setPage(currentPage+1)}
                 title="Next"
             >

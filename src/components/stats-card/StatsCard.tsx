@@ -33,12 +33,19 @@ export const StatsCard = (props: myProp) => {
     }
 
     const getNameStat = (stat: string) => {
-        if(stat == 'special-attack') {
-            return 'sp. attack'
-        } else if (stat == 'special-defense') {
-            return 'sp. defense'
-        } else {
-            return stat
+        switch(stat) {
+            case 'attack':
+                return 'atk';
+            case 'special-attack':
+                return 'sp. atk';
+            case 'defense':
+                return 'def';
+            case 'special-defense':
+                return 'sp. def';
+            case 'speed':
+                return 'spd';
+            default:
+                return stat
         }
     }
 
